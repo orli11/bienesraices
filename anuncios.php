@@ -1,35 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienes Raíces</title>
-    <link rel="stylesheet" href="build/css/app.css">
-</head>
-<body>
-    <header class="header">
-        <div class="contenedor contenido-header">
-            <div class="barra">
-                <a href="/">
-                    <img src="build/img/logo.svg" alt="logotipo de Bienes Raices">
-                </a>
-                
-                <div class="mobile-menu">
-                    <img src="build/img/barras.svg" alt="icono menu responsive">
-                </div>
-
-                <div class="derecha">
-                    <img class="dark-mode-boton" src="build/img/dark-mode.svg" alt="icono darkmode">
-                    <nav class="navegacion">
-                        <a href="nosotros.html">Nosotros</a>
-                        <a href="anuncios.html">Anuncios</a>
-                        <a href="blog.html">Blog</a>
-                        <a href="contacto.html">Contacto</a>
-                    </nav>
-                </div>
-            </div><!-- .barra -->
-        </div>
-    </header>
+<?php include 'includes/templates/header.php'; ?>
 
     <main class="contenedor seccion">
         <h1>Casas y Departamentos en Venta</h1>
@@ -60,7 +29,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -92,7 +61,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -124,7 +93,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -156,7 +125,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -188,7 +157,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -220,7 +189,7 @@
                         </li>
                     </ul>
 
-                    <a href="anuncio.html" class="boton boton-amarillo-block">
+                    <a href="anuncio.php" class="boton boton-amarillo-block">
                         Ver propiedad
                     </a> 
                 </div>  <!-- contenido-anuncio -->
@@ -233,10 +202,10 @@
     <footer class="footer seccion">
         <div class="contenedor contenedor-footer">
             <nav class="navegacion">
-                <a href="nosotros.html">Nosotros</a>
-                <a href="anuncios.html">Anuncios</a>
-                <a href="blog.html">Blog</a>
-                <a href="contacto.html">Contacto</a>
+                <a href="nosotros.php">Nosotros</a>
+                <a href="anuncios.php">Anuncios</a>
+                <a href="blog.php">Blog</a>
+                <a href="contacto.php">Contacto</a>
             </nav>
         </div>
         <p class="copyright">Todos los derechos reservados 2026 &copy;</p>
