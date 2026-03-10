@@ -2,8 +2,20 @@
     require '../../includes/config/database.php';
     $db = conectarDB();
 
+    //Consultar para obtener los vendedores
+    $consulta = "SELECT * FROM vendedores";
+    $resultado = mysqli_query($db, $consulta);
+
     // Arreglo con mensajes de errores:
     $errores = [];
+
+    $titulo = '';
+    $precio = '';
+    $descripcion = '';
+    $habitaciones = '';
+    $wc = '';
+    $estacionamiento = '';
+    $vendedores_id = '';
 
 
     // Ejecutar el código despues de que el usuario envía el formulario
@@ -74,38 +86,40 @@
                 <legend>Información General</legend>
 
                 <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" placeholder="Título de la Propiedad">
+                <input type="text" id="titulo" name="titulo" placeholder="Título de la Propiedad" value="<?php echo $titulo;?>">
 
                 <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" placeholder="Precio de la Propiedad">
+                <input type="number" id="precio" name="precio" placeholder="Precio de la Propiedad" value="<?php echo $precio;?>">
 
                 <label for="imagen">Imagen:</label>
                 <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
 
                 <label for="descripcion">Descripción:</label>
-                <textarea name="descripcion" id="descripcion"></textarea>
+                <textarea name="descripcion" id="descripcion"><?php echo $descripcion;?></textarea>
             </fieldset>
 
             <fieldset>
                 <legend>Información de la Propiedad</legend>
 
                 <label for="habitaciones">Habitaciones:</label>
-                <input type="number" id="habitaciones" name="habitaciones" placeholder="Ejm: 3" min="1" max="9">
+                <input type="number" id="habitaciones" name="habitaciones" placeholder="Ejm: 3" min="1" max="9" value="<?php echo $habitaciones;?>">
 
                 <label for="wc">Baños:</label>
-                <input type="number" id="wc" name="wc" placeholder="Ejm: 3" min="1" max="9">
+                <input type="number" id="wc" name="wc" placeholder="Ejm: 3" min="1" max="9" value="<?php echo $wc;?>">
 
                 <label for="estacionamiento">Estacionamiento:</label>
-                <input type="number" id="estacionamiento" name="estacionamiento" placeholder="Ejm: 3" min="1" max="9">
+                <input type="number" id="estacionamiento" name="estacionamiento" placeholder="Ejm: 3" min="1" max="9" value="<?php echo $estacionamiento;?>">
             </fieldset>
 
             <fieldset>
                 <legend>Vendedor</legend>
 
                 <select name="vendedor" id="vendedor">
-                    <option value="">-- Seleccione --</option>
-                    <option value="1">Orlando</option>
-                    <option value="2">Delfina</option>
+                    <option>-- Seleccione --</option>
+                    <?php while($vendedores_id = mysqli_fetch_assoc($resultado)) :?>
+                        <option value="<?php echo $vendedores_id['id'];?>"><?php echo $vendedores_id['nombre'] . " " . $vendedores_id['apellido']; ?></option>
+                    <?php endwhile ?>
+
                 </select>
             </fieldset>
 
