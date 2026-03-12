@@ -24,13 +24,15 @@
         // var_dump($_POST);
         // echo "</pre>";
 
-        $titulo = $_POST['titulo'];
-        $precio = $_POST['precio'];
-        $descripcion = $_POST['descripcion'];
-        $habitaciones = $_POST['habitaciones'];
-        $wc = $_POST['wc'];
-        $estacionamiento = $_POST['estacionamiento'];
-        $vendedores_id = $_POST['vendedor'];
+        //Validacion y asegurar la entrada de datos
+        $titulo = mysqli_real_escape_string( $db, $_POST['titulo']);
+        $precio = mysqli_real_escape_string( $db, $_POST['precio']);
+        $descripcion = mysqli_real_escape_string( $db, $_POST['descripcion']);
+        $habitaciones = mysqli_real_escape_string( $db, $_POST['habitaciones']);
+        $wc = mysqli_real_escape_string( $db, $_POST['wc']);
+        $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento']);
+        $vendedores_id = mysqli_real_escape_string( $db, $_POST['vendedor']);
+        $creado = date('Y/m/d');
 
         
         if(!$titulo ) {
@@ -58,11 +60,13 @@
         //Revisar que el arreglo de errores esté vacío.
         if(empty($errores)) {
              // Insertar en la base de datos
-            $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, vendedores_id) 
-            VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$vendedores_id')";
+            $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) 
+            VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedores_id')";
             $resultado = mysqli_query($db, $query);
                 if($resultado) {
-                echo "Insertado correctamente";
+                // Redireccionar al ususario para evitar entradas duplicadas
+                // echo "Insertado correctamente";
+                header('Location: /admin'); // Solo funciona antes de html, utilizarlo muy poco para evitar problemas
             }
         }
     }
@@ -116,8 +120,8 @@
 
                 <select name="vendedor" id="vendedor">
                     <option>-- Seleccione --</option>
-                    <?php while($vendedores_id = mysqli_fetch_assoc($resultado)) :?>
-                        <option value="<?php echo $vendedores_id['id'];?>"><?php echo $vendedores_id['nombre'] . " " . $vendedores_id['apellido']; ?></option>
+                    <?php while($vendedor = mysqli_fetch_assoc($resultado)) :?>
+                        <option <?php echo $vendedores_id === $vendedor['id'] ? 'selected': ''; ?> value="<?php echo $vendedor['id'];?>"><?php echo $vendedor['nombre'] . " " . $vendedor['apellido']; ?></option>
                     <?php endwhile ?>
 
                 </select>
