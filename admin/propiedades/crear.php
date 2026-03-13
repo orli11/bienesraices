@@ -22,7 +22,10 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
         // echo "<pre>";
         // var_dump($_POST);
-        // echo "</pre>";
+        //echo "</pre>";
+        echo "<pre>";
+        var_dump($_FILES);
+        echo "</pre>";
 
         //Validacion y asegurar la entrada de datos
         $titulo = mysqli_real_escape_string( $db, $_POST['titulo']);
@@ -33,6 +36,9 @@
         $estacionamiento = mysqli_real_escape_string( $db, $_POST['estacionamiento']);
         $vendedores_id = mysqli_real_escape_string( $db, $_POST['vendedor']);
         $creado = date('Y/m/d');
+
+        // Asignarle una variable a imagen
+        $imagen = $_FILES['imagen']; 
 
         
         if(!$titulo ) {
@@ -56,10 +62,30 @@
         if(!$vendedores_id ) {
             $errores[] = "Debes seleccionar un vendedor";
         }
+        if(!$imagen['name'] || $imagen['error'] ) {
+            $errores[] = 'La imagen es obligatoria.';
+        }
+        //Validar el tamaño de imagen 1MB MAX.
+        $medida = 1000 * 1000;
+        if($imagen['size'] > $medida) {
+            $errores[] = 'La imagen es muy pesada';
+        }
 
         //Revisar que el arreglo de errores esté vacío.
         if(empty($errores)) {
-             // Insertar en la base de datos
+            // Subida de Archivos
+            //Crear carpeta:
+            $carpetaImagenes = '../../imagenes';
+
+            if(!is_dir($carpetaImagenes)) { //retorna si una carpeta existe o no
+                mkdir($carpetaImagenes); //Crea la carpeta
+            }
+
+            // Subir imagenes
+            // Para mover la imagen de memoria del servidor a memoria del disco (a la carpeta que estamos creando)
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes .  "/archivo.jpg");
+            exit;
+
             $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) 
             VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedores_id')";
             $resultado = mysqli_query($db, $query);
@@ -85,7 +111,7 @@
         </div>
         <?php endforeach; ?>
 
-        <form action="/admin/propiedades/crear.php" method="POST" class="formulario">
+        <form action="/admin/propiedades/crear.php" method="POST" class="formulario" enctype="multipart/form-data"> <!--Utilizarlo siempre que un formulario necesite subir archivos -->
             <fieldset>
                 <legend>Información General</legend>
 
@@ -96,7 +122,7 @@
                 <input type="number" id="precio" name="precio" placeholder="Precio de la Propiedad" value="<?php echo $precio;?>">
 
                 <label for="imagen">Imagen:</label>
-                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+                <input type="file" id="imagen" name="imagen" accept="image/jpeg, image/png" name="imagen">
 
                 <label for="descripcion">Descripción:</label>
                 <textarea name="descripcion" id="descripcion"><?php echo $descripcion;?></textarea>
