@@ -75,21 +75,23 @@
         if(empty($errores)) {
             // Subida de Archivos
             //Crear carpeta:
-            $carpetaImagenes = '../../imagenes';
+            $carpetaImagenes = '../../imagenes/';
 
             if(!is_dir($carpetaImagenes)) { //retorna si una carpeta existe o no
                 mkdir($carpetaImagenes); //Crea la carpeta
             }
 
+            // Generar Nombre único para las imagenes
+            $nombreImagen = md5( uniqid( rand(), true ) . ".jpg"); //md5 valor hash, uniqid genera valor único
+
             // Subir imagenes
             // Para mover la imagen de memoria del servidor a memoria del disco (a la carpeta que estamos creando)
-            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes .  "/archivo.jpg");
-            exit;
+            move_uploaded_file($imagen['tmp_name'], $carpetaImagenes . $nombreImagen);
 
-            $query = "INSERT INTO propiedades (titulo, precio, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) 
-            VALUES ('$titulo', '$precio', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedores_id')";
+            $query = "INSERT INTO propiedades (titulo, precio, imagen, descripcion, habitaciones, wc, estacionamiento, creado, vendedores_id) 
+            VALUES ('$titulo', '$precio', '$nombreImagen', '$descripcion', '$habitaciones', '$wc', '$estacionamiento', '$creado', '$vendedores_id')";
             $resultado = mysqli_query($db, $query);
-                if($resultado) {
+            if($resultado) {
                 // Redireccionar al ususario para evitar entradas duplicadas
                 // echo "Insertado correctamente";
                 header('Location: /admin'); // Solo funciona antes de html, utilizarlo muy poco para evitar problemas
